@@ -1,4 +1,4 @@
-// Backend (Node.js + Express)
+Backend (Node.js + Express)
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -8,10 +8,10 @@ const mongoose = require('mongoose');
 app.use(cors());
 app.use(bodyParser.json());
 
-// Conectar a la base de datos MongoDB
+Conectar a la base de datos MongoDB
 mongoose.connect('mongodb://localhost:27017/logistica', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Modelo de paquete
+Modelo de paquete
 const Package = mongoose.model('Package', new mongoose.Schema({
     trackingNumber: String,
     sender: String,
@@ -20,13 +20,13 @@ const Package = mongoose.model('Package', new mongoose.Schema({
     assignedDriver: String
 }));
 
-// Ruta para rastreo de paquetes
+Ruta para rastreo de paquetes
 app.get('/track/:trackingNumber', async (req, res) => {
     const package = await Package.findOne({ trackingNumber: req.params.trackingNumber });
     res.json(package);
 });
 
-// Ruta para actualizar estado del paquete
+Ruta para actualizar estado del paquete
 app.post('/update-package', async (req, res) => {
     const { trackingNumber, status } = req.body;
     await Package.updateOne({ trackingNumber }, { status });
@@ -37,7 +37,7 @@ app.listen(5000, () => {
     console.log('Servidor ejecutándose en el puerto 5000');
 });
 
-// Frontend (React)
+Frontend (React)
 import React, { useState } from 'react';
 import axios from 'axios';
 
